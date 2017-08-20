@@ -310,7 +310,7 @@
 												<div class='g_globalLine '>
 													<textarea id='content'
 														class='mustItem itemEdit userAddItem g_textArea msg_textArea'
-														name='content' id='content'></textarea>
+														name='editorValue'></textarea>
 												</div>
 												<input type='hidden' id="clientId" name='clientId'
 													value=''>

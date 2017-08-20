@@ -264,7 +264,7 @@
 												<div class='g_globalLine '>
 													<textarea id='content'
 														class='mustItem itemEdit userAddItem g_textArea msg_textArea'
-														name='content' id='content'>${db.content}</textarea>
+														name='editorValue' id='content'>${db.content}</textarea>
 												</div>
 												<input type='hidden' id="clientId" name='clientId'
 													value='${db.clientId}'>
