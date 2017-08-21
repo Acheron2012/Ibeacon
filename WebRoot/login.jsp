@@ -23,17 +23,17 @@
             </div>         
             <form id="loginForm" name="loginForm" action="login.do" method="post">
             <div class="panel loginbox">
-                <div class="text-center margin-big padding-big-top"><h1>后台管理中心</h1></div>
+                <div class="text-center margin-big padding-big-top"><h1>iBeacon后台管理中心</h1></div>
                 <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
                     <div class="form-group">
                         <div class="field field-icon-right">
-                            <input type="text" class="input input-big" maxlength='50' id='userName' name='userName' placeholder="登录账号" />
+                            <input type="text" class="input input-big" maxlength='50' id='userName' name='userName' value="${userName}" placeholder="登录账号" />
                             <span class="icon icon-user margin-small"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="field field-icon-right">
-                            <input type="password" class="input input-big"  maxlength='20' id='password' name='password' placeholder="登录密码" />
+                            <input type="password" class="input input-big"  maxlength='20' id='password' name='password' value="${password}" placeholder="登录密码" />
                              <input type="hidden" name="roleName" id="roleName" value="client">
                             <span class="icon icon-key margin-small"></span>
                         </div>
@@ -54,7 +54,15 @@
                         </div>
                     </div>
                 </div>
-                <div style="color:#F00;" ><span id="notice" style=" margin-left:10%; display:none">:</span></div>
+                					<c:choose>
+										<c:when test="${message<0}">
+											 <div style="color:#F00;" ><span id="notice" style=" margin-left:10%;">用户名或密码错误!</span></div>
+										</c:when>
+										<c:otherwise>
+											
+										</c:otherwise>
+									</c:choose>
+               
                 <div style="padding:30px;"><input type="button" onClick="login();" class="button button-block bg-main text-big input-big" value="登录"></div>
             </div>
             </form>          

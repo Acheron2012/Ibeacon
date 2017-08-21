@@ -33,6 +33,9 @@
 </head>
 <body>
 <div class="page-container">
+	<div class="row cl" style="margin-top: -20px;margin-left: -220px;">
+			<label class="bread"><a href="searchDevice.do?userId=<%=rb.getUserId()%>&page=1&roleName=<%=rb.getRoleName()%>" style="text-decoration: none;"><<返回</a></label>
+	  </div>
 	<form action="updateDevice.do" method="post" class="form form-horizontal" id="updateDeviceForm" name="updateDeviceForm" enctype="multipart/form-data">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>设备名称：</label>
@@ -50,13 +53,13 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>major：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="${db.major}" placeholder="请输入设备major(必填)" maxlength='11' readonly="readonly" id="major" name="major">
+				<input type="text" class="input w50" value="${db.major}" placeholder="请输入设备major(必填)" maxlength='5' readonly="readonly" id="major" name="major">
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>major：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="${db.minor}" placeholder="请输入设备minor(必填)" maxlength='11' readonly="readonly" id="minor" name="minor">
+				<input type="text" class="input w50" value="${db.minor}" placeholder="请输入设备minor(必填)" maxlength='5' readonly="readonly" id="minor" name="minor">
 				<span id="minor_notice" class="c-red"></span>
 			</div>
 		</div>
@@ -77,7 +80,7 @@
 			<div class="formControls col-xs-8 col-sm-9"> 
 				<span class="btn-upload form-group">
 				<input class="input-text upload-url" type="text" name="uploadfile" id="uploadfile" nullmsg="请添加视频文件！" style="width:200px">
-				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont"></i> 选择视频文件</a>
+				<a href="javascript:void();" class="btn btn-primary radius upload-btn"><i class="Hui-iconfont"></i>视频/音频</a>
 				<input type="file" name="videoFile" id="videoFile" class="input-file">
 				</span> </div>
 		</div>
@@ -139,6 +142,7 @@
 		});
 		function updateDevice() {
 			var deviceName = document.getElementById("deviceName").value;
+			
 			if (deviceName == "") {
 				document.getElementById("name_notice").innerHTML = "请填写设备名称!";
 				document.getElementById("deviceName").focus();

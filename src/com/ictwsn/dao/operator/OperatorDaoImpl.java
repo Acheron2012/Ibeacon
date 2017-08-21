@@ -49,7 +49,7 @@ public class OperatorDaoImpl extends MySQLBaseDao implements OperatorDao {
 	}
 	private List<ClientBean> operatorSearchClient(int userId,int number,int size,String roleName) {
 		List<ClientBean> cbs=new ArrayList<ClientBean>();
-		String sql="select client_id,client_name,client_password,client_phone,client_email,client.operator_id,operator_name from client,operator where operator.operator_id=client.operator_id and operator_id=? order by client_id desc limit ?,?";
+		String sql="select client_id,client_name,client_password,client_phone,client_email,client.operator_id,operator_name from client,operator where operator.operator_id=client.operator_id and operator.operator_id=? order by client_id desc limit ?,?";
 		try{
 			conn=CurrentConn.getConn();
 			pst=conn.prepareStatement(sql);

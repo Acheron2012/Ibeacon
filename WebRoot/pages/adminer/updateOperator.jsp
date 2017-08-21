@@ -34,33 +34,43 @@
 </head>
 <body>
 <div class="page-container">
+	<div class="row cl" style="margin-top: -20px;margin-left: -220px;">
+			<label class="bread"><a href="searchOperator.do?userId=<%=rb.getUserId()%>&page=1&roleName=<%=rb.getRoleName()%>" style="text-decoration: none;"><<返回</a></label>
+	  </div>
 	<form action="" method="post" class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运营商名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="${ob.name}" maxlength='20' placeholder="请输入运营商名称" readonly="readonly" id="operatorName" name="operatorName">
+				<input type="text" class="input w50" value="${ob.name}" maxlength='20' placeholder="请输入运营商名称(必填)" readonly="readonly" id="operatorName" name="operatorName">
 				<span id="name_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运营商密码：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="${ob.password}" maxlength='20' placeholder="请输入运营商密码" id="operatorPassword" name="operatorPassword">
+				<input type="password" class="input w50" value="${ob.password}" maxlength='20' placeholder="请输入运营商密码(必填)" id="operatorPassword" name="operatorPassword">
 				<span id="password_notice" class="c-red"></span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>确认密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input w50" value="${ob.password}" maxlength='20' placeholder="请再次输入密码(必填)" id="operatorPassword_confirm" name="operatorPassword_confirm">
+				<span id="password_confirm_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运营商UUID：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="${ob.uuid}" maxlength='36' placeholder="请输入UUID" id="operatorUuid" name="operatorUuid">
+				<input type="text" class="input w50" value="${ob.uuid}" maxlength='36' placeholder="请输入UUID(必填)" id="operatorUuid" name="operatorUuid">
 			
-			<span id="uuid_notice" class="c-red"></span>
+				<span id="uuid_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>运营商major：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="${ob.major}" maxlength='11' placeholder="请输入major" id="operatorMajor" name="operatorMajor">
+				<input type="text" class="input w50" value="${ob.major}" maxlength='5' placeholder="请输入major(0-65532)" id="operatorMajor" name="operatorMajor">
 			
 			<span id="major_notice" class="c-red"></span>
 			</div>
@@ -68,13 +78,15 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>运营商电话：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="${ob.phone}" maxlength='11' placeholder="请输入运营商电话" id="operatorPhone" name="operatorPhone">
+				<input type="text" class="input w50" value="${ob.phone}" maxlength='13' placeholder="请输入运营商电话" id="operatorPhone" name="operatorPhone">
+				<span id="phone_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>运营商地址：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input w50" value="${ob.address}" maxlength='50' placeholder="请输入运营商地址" id="operatorAddress" name="operatorAddress">
+				<span id="address_notice" class="c-red"></span>
 			</div>
 		</div>
 		<input type="hidden" value="3" id="roleId" name="roleId">
@@ -97,6 +109,7 @@
 function updateOperator(){
 			var operatorName=document.getElementById("operatorName").value;
 			var operatorPassword=document.getElementById("operatorPassword").value;
+			var operatorPassword_confirm=document.getElementById("operatorPassword_confirm").value;
 			var operatorUuid=document.getElementById("operatorUuid").value;
 			var operatorMajor=document.getElementById("operatorMajor").value;
 			var operatorPhone=document.getElementById("operatorPhone").value;
@@ -113,14 +126,41 @@ function updateOperator(){
 				document.getElementById("operatorPassword").focus();
 				return 0;
 			}
+			if(operatorPassword_confirm==""){
+				document.getElementById("password_confirm_notice").innerHTML="*请输入确认密码!";
+				document.getElementById("operatorPassword_confirm").focus();
+				return 0;
+			}else if(operatorPassword_confirm!=operatorPassword){
+				document.getElementById("password_confirm_notice").innerHTML="*两次输入的密码不一致!";
+				document.getElementById("operatorPassword_confirm").focus();
+				return 0;
+			}
+			var repUuid=/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/;
 			if(operatorUuid==""){
 				document.getElementById("uuid_notice").innerHTML="*请填写UUID!";
 				document.getElementById("operatorUuid").focus();
 				return 0;
+			}else if(!repUuid.test(operatorUuid)){
+				document.getElementById("uuid_notice").innerHTML="*UUID格式不正确!";
+				document.getElementById("operatorUuid").focus();
+				return 0;
 			}
+			var repMajorMinor=/^([0-5]?[0-9]{0,4}|6[0-5][0-5][0-3][0-2])$/;
 			if(operatorMajor==""){
 				document.getElementById("major_notice").innerHTML="*请填写major!";
 				document.getElementById("operatorMajor").focus();
+				return 0;
+			}else if(!repMajorMinor.test(operatorMajor)){
+				document.getElementById("major_notice").innerHTML="*major格式不正确!";
+				document.getElementById("operatorMajor").focus();
+				return 0;
+			}
+			var repPhone=/^(((0\d{2,3})-)(\d{7,8})(-(\d{3,}))?)|(1(3|5|7|8)\d{9})$/;
+			if(operatorPhone==""){
+				
+			}else if(!repPhone.test(operatorPhone)){
+				document.getElementById("phone_notice").innerHTML="*请正确填写电话!";
+				document.getElementById("operatorPhone").focus();
 				return 0;
 			}
 			$.post("updateOperator.do",{operatorName:operatorName,operatorPassword:operatorPassword,operatorUuid:operatorUuid,operatorMajor:operatorMajor,operatorPhone:operatorPhone,operatorAddress:operatorAddress,roleId:roleId,operatorId:operatorId},

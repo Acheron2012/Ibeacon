@@ -23,7 +23,7 @@
 <body style="background-color:#f2f9fd;" onload="authorityCheck();">
 <div class="header bg-main">
   <div class="logo margin-big-left fadein-top">
-    <h1><img src="images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />IBeacon后台管理中心</h1>
+    <h1><img src="images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />iBeacon后台管理中心</h1>
   </div>
   <div class="head-l"><a href="login.do?userName=-1&password=-1&roleName=-1" class="button button-little bg-green"><span class="icon-home"></span> 前台首页</a> &nbsp;&nbsp; &nbsp;&nbsp;<a class="button button-little bg-red" href="logoff.do"><span class="icon-power-off"></span> 退出登录</a> </div>
 </div>
@@ -39,10 +39,12 @@
 //权限控制,根据RoleBean的authority进行选择性显示
 		function authorityCheck() {
 			var authority = '${RoleBean.authroity}';
-			if (authority != null && authority != ''){
+			if (authority != null && authority != ''){		 
 				var items = authority.split(",");
-				for ( var i = 0; i < items.length; i++)
+				for ( var i = 0; i < items.length; i++){
 					document.getElementById("item_" + items[i]).style.visibility = "visible";
+				}
+					
 			}
 		}
 $(function(){

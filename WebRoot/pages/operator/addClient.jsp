@@ -34,19 +34,29 @@
 </head>
 <body>
 <div class="page-container">
+<div class="row cl" style="margin-top: -20px;margin-left: -220px;">
+			<label class="bread"><a href="searchClient.do?userId=<%=rb.getUserId()%>&page=1&roleName=<%=rb.getRoleName()%>" style="text-decoration: none;"><<返回</a></label>
+	  </div>
 	<form action="" method="post" class="form form-horizontal" id="form-article-add">
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>用户名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="" maxlength='20' placeholder="请输入用户名称" id="clientName" name="clientName">
+				<input type="text" class="input w50" value="" maxlength='20' placeholder="请输入用户名称(必填)" id="clientName" name="clientName">
 				<span id="name_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>用户密码：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="" maxlength='20' placeholder="请输入用户密码" id="clientPassword" name="clientPassword">
+				<input type="password" class="input w50" value="" maxlength='20' placeholder="请输入用户密码(必填)" id="clientPassword" name="clientPassword">
 				<span id="password_notice" class="c-red"></span>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>确认密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="password" class="input w50" value="" maxlength='20' placeholder="请再次输入密码(必填)" id="clientPassword_confirm" name="clientPassword_confirm">
+				<span id="password_confirm_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
@@ -64,13 +74,15 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>联系电话：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input w50" value="" maxlength='11' placeholder="请输入用户电话" id="clientPhone" name="clientPhone">
+				<input type="text" class="input w50" value="" maxlength='13' placeholder="请输入用户电话" id="clientPhone" name="clientPhone">
+				<span id="phone_notice" class="c-red"></span>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>用户邮箱：</label>
 			<div class="formControls col-xs-8 col-sm-9">
 				<input type="text" class="input w50" value="" maxlength='50' placeholder="请输入用户邮箱" id="clientEmail" name="clientEmail">
+				<span id="email_notice" class="c-red"></span>
 			</div>
 		</div>
 		<input type="hidden" value="3" id="roleId" name="roleId">
@@ -103,6 +115,7 @@ function addClient(){
 			var operatorId = document.getElementById("operatorId").value;
 			var clientName = document.getElementById("clientName").value;
 			var clientPassword = document.getElementById("clientPassword").value;
+			var clientPassword_confirm = document.getElementById("clientPassword_confirm").value;
 			var clientPhone = document.getElementById("clientPhone").value;
 			var clientEmail = document.getElementById("clientEmail").value;
 			var roleId = document.getElementById("roleId").value;
@@ -116,9 +129,34 @@ function addClient(){
 				document.getElementById("clientPassword").focus();
 				return 0;
 			}
+			if(clientPassword_confirm==""){
+				document.getElementById("password_confirm_notice").innerHTML="*请输入确认密码!";
+				document.getElementById("clientPassword_confirm").focus();
+				return 0;
+			}else if(clientPassword_confirm!=clientPassword){
+				document.getElementById("password_confirm_notice").innerHTML="*两次输入的密码不一致!";
+				document.getElementById("clientPassword_confirm").focus();
+				return 0;
+			}
 			if(operatorId==""){
 				document.getElementById("belong_notice").innerHTML="*请选择用户所属运营商!";
 				document.getElementById("selectOperator").focus();
+				return 0;
+			}
+			var rep=/^(((0\d{2,3})-)(\d{7,8})(-(\d{3,}))?)|(1(3|5|7|8)\d{9})$/;
+			if(clientPhone==""){
+				
+			}else if(!rep.test(clientPhone)){
+				document.getElementById("phone_notice").innerHTML="*请正确填写电话!";
+				document.getElementById("clientPhone").focus();
+				return 0;
+			}
+			var rep2=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+			if(clientEmail==""){
+				
+			}else if(!rep2.test(clientEmail)){
+				document.getElementById("email_notice").innerHTML="*请正确填写邮箱!";
+				document.getElementById("clientEmail").focus();
 				return 0;
 			}
 		$.post("addClient.do", {
