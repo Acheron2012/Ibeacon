@@ -89,7 +89,7 @@
 				<span id="address_notice" class="c-red"></span>
 			</div>
 		</div>
-		<input type="hidden" value="3" id="roleId" name="roleId">
+		<input type="hidden" value="2" id="roleId" name="roleId">
 		<input type="hidden" value="${ob.id}" id="operatorId" name="operatorId">
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
